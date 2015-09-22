@@ -81,11 +81,11 @@
                                                 <constraint firstAttribute="trailing" secondItem="Why-bF-x4J" secondAttribute="trailing" constant="8" id="LPX-9n-WCt"/>
                                                 <constraint firstItem="VXm-6K-dnI" firstAttribute="top" secondItem="K4u-Cn-Qke" secondAttribute="topMargin" constant="8" id="Mme-st-Wx3"/>
                                                 <constraint firstItem="e3y-1M-0hU" firstAttribute="top" secondItem="K4u-Cn-Qke" secondAttribute="top" constant="8" id="S9C-ZC-12t"/>
+                                                <constraint firstItem="Why-bF-x4J" firstAttribute="top" secondItem="K4u-Cn-Qke" secondAttribute="topMargin" constant="3" id="UFw-WJ-8un"/>
                                                 <constraint firstItem="Why-bF-x4J" firstAttribute="leading" secondItem="e3y-1M-0hU" secondAttribute="trailing" constant="8" id="iB8-r0-yST"/>
                                                 <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="VXm-6K-dnI" secondAttribute="bottom" constant="12" id="l0Q-Cl-hYo"/>
                                                 <constraint firstItem="e3y-1M-0hU" firstAttribute="leading" secondItem="VXm-6K-dnI" secondAttribute="trailing" constant="8" id="pnq-eP-i8q"/>
                                                 <constraint firstItem="VXm-6K-dnI" firstAttribute="leading" secondItem="K4u-Cn-Qke" secondAttribute="leadingMargin" constant="7" id="qLp-EV-yuJ"/>
-                                                <constraint firstItem="Why-bF-x4J" firstAttribute="baseline" secondItem="e3y-1M-0hU" secondAttribute="baseline" id="wHn-d0-0hT"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
