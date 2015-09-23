@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BusinessesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class BusinessesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SwitchCellDelegate {
 
     var businesses: [Business]!
     
@@ -64,6 +64,7 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
         let cell = tableView.dequeueReusableCellWithIdentifier("BusinessCell", forIndexPath: indexPath) as! BusinessCell
         
         cell.business = businesses[indexPath.row]
+        cell.delegate = self
         
         return cell
     }
