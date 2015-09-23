@@ -8,9 +8,15 @@
 
 import UIKit
 
+@objc protocol FiltersViewControllerDelegate {
+    optional func filtersViewController(filtersViewController: FiltersViewController, didUpdateFilters filters: [String:AnyObject])
+}
+
 class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SwitchCellDelegate {
 
     @IBOutlet weak var tableView: UITableView!
+    weak var delegate: FiltersViewControllerDelegate?
+    
     var categories: [[String:String]]!
     var switchStates = [Int:Bool]()
 
@@ -33,6 +39,21 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBAction func onSearch(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
+        var filters = [String: AnyObject]()
+        
+        var selectedCategories = [String]()
+        for (row, isSelected) in switchStates {
+            if isSelected {
+                selectedCategories.append(categories[row]["code"]!)
+            }
+        }
+        
+        if selectedCategories.count > 0 {
+            filters["categories"] = selectedCategories
+        }
+        
+        // If delegate exists, run this filtersViewController
+        delegate?.filtersViewController?(self, didUpdateFilters: filters)
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
