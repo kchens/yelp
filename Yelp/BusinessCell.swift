@@ -32,6 +32,7 @@ class BusinessCell: UITableViewCell {
   
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.layoutMargins = UIEdgeInsetsZero
         
         thumbImageView.layer.cornerRadius = 3
         thumbImageView.clipsToBounds = true
