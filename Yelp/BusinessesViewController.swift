@@ -45,13 +45,8 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
         
         Business.searchWithTerm("Restaurants", sort: .Distance, categories: ["asianfusion", "burgers"], deals: true) { (businesses: [Business]!, error: NSError!) -> Void in
 
-            // Extract out this set-up into another function
             self.businesses = businesses
-            if self.searchedTerm == "" {
-                self.filteredBusinesses = self.businesses
-            } else {
-                self.filteredBusinesses = self.filterOnSearch(self.searchedTerm)
-            }
+            self.setUpFilteredBusinesses()
 
             self.tableView.reloadData()
             
@@ -59,6 +54,14 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
                 print(business.name!)
                 print(business.address!)
             }
+        }
+    }
+    
+    func setUpFilteredBusinesses() {
+        if self.searchedTerm.characters.count == 0 {
+            self.filteredBusinesses = self.businesses
+        } else {
+            self.filteredBusinesses = self.filterOnSearch(self.searchedTerm)
         }
     }
 
@@ -86,12 +89,13 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
         return cell
     }
   
-    // Mark: - SearchBar
+    // Mark: - SearchBar - protocol
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         filterOnSearch(searchText)
         tableView.reloadData()
     }
     
+    // Search-related function
     func filterOnSearch(searchText: String) -> [Business] {
         filteredBusinesses = searchText.isEmpty ? businesses : businesses.filter({ (business: Business) -> Bool in
             let stringMatch = (business.name)?.rangeOfString(searchText, options: .CaseInsensitiveSearch)
@@ -111,6 +115,7 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
         filtersViewController.delegate = self
     }
 
+    // Navigation-related function
     func filtersViewController(filtersViewController: FiltersViewController, didUpdateFilters filters: [String : AnyObject]) {
         var categories = filters["categories"] as? [String]
         Business.searchWithTerm("Restaurants", sort: nil, categories: categories, deals: nil) { (businesses: [Business]!,
