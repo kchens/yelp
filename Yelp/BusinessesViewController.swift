@@ -8,24 +8,32 @@
 
 import UIKit
 
-class BusinessesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SwitchCellDelegate, FiltersViewControllerDelegate {
+class BusinessesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SwitchCellDelegate, FiltersViewControllerDelegate, UISearchBarDelegate {
 
-    var businesses: [Business]!
+    let searchBar = UISearchBar()
     
-  @IBOutlet weak var tableView: UITableView!
+    var businesses: [Business]!
+    var filteredBusinesses: [Business]!
+    var searchedMovies: [String: AnyObject]?
+    var searchedTerm = "";
+    
+    @IBOutlet weak var tableView: UITableView!
   
     override func viewDidLoad() {
         super.viewDidLoad()
       
         tableView.delegate = self
         tableView.dataSource = self
-        
         // Use whatever autoconstrained layouts told you to do
         tableView.rowHeight = UITableViewAutomaticDimension
         // Used in conjunction with above
-        // 
         tableView.estimatedRowHeight = 120
 
+        // Set up search bar
+        searchBar.sizeToFit()
+        navigationItem.titleView = searchBar
+        searchBar.delegate = self
+        
 //        Business.searchWithTerm("Thai", completion: { (businesses: [Business]!, error: NSError!) -> Void in
 //            self.businesses = businesses
 //            
@@ -36,7 +44,15 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
 //        })
         
         Business.searchWithTerm("Restaurants", sort: .Distance, categories: ["asianfusion", "burgers"], deals: true) { (businesses: [Business]!, error: NSError!) -> Void in
+
+            // Extract out this set-up into another function
             self.businesses = businesses
+            if self.searchedTerm == "" {
+                self.filteredBusinesses = self.businesses
+            } else {
+                self.filteredBusinesses = self.filterOnSearch(self.searchedTerm)
+            }
+
             self.tableView.reloadData()
             
             for business in businesses {
@@ -53,8 +69,8 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
 
     // MARK: - TableView Protocol Methods
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if businesses != nil {
-            return businesses!.count
+        if let filteredBusinesses = filteredBusinesses {
+            return filteredBusinesses.count
         } else {
             return 0
         }
@@ -64,12 +80,25 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
         let cell = tableView.dequeueReusableCellWithIdentifier("BusinessCell", forIndexPath: indexPath) as! BusinessCell
         cell.separatorInset = UIEdgeInsetsZero
         
-        cell.business = businesses[indexPath.row]
+        cell.business = filteredBusinesses[indexPath.row]
 //        cell.delegate = self
         
         return cell
     }
   
+    // Mark: - SearchBar
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        filterOnSearch(searchText)
+        tableView.reloadData()
+    }
+    
+    func filterOnSearch(searchText: String) -> [Business] {
+        filteredBusinesses = searchText.isEmpty ? businesses : businesses.filter({ (business: Business) -> Bool in
+            let stringMatch = (business.name)?.rangeOfString(searchText, options: .CaseInsensitiveSearch)
+            return (stringMatch != nil)
+        })
+        return filteredBusinesses
+    }
   
   
     // MARK: - Navigation
