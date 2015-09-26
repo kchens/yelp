@@ -117,7 +117,7 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
 
     // Navigation-related function
     func filtersViewController(filtersViewController: FiltersViewController, didUpdateFilters filters: [String : AnyObject]) {
-        var categories = filters["categories"] as? [String]
+        let categories = filters["categories"] as? [String]
         Business.searchWithTerm("Restaurants", sort: nil, categories: categories, deals: nil) { (businesses: [Business]!,
             error: NSError!) -> Void in
             self.businesses = businesses

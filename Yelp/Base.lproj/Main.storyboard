@@ -185,6 +185,29 @@
                                             <outlet property="switchLabel" destination="T2w-GJ-EY2" id="2Fk-cI-95l"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CheckCell" id="FGr-5J-3iT" customClass="CheckCell" customModule="Yelp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="136" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FGr-5J-3iT" id="j2c-NJ-0ua">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pOS-0H-dKv">
+                                                    <rect key="frame" x="16" y="11" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="pOS-0H-dKv" firstAttribute="centerY" secondItem="j2c-NJ-0ua" secondAttribute="centerY" id="9FM-eB-634"/>
+                                                <constraint firstItem="pOS-0H-dKv" firstAttribute="leading" secondItem="j2c-NJ-0ua" secondAttribute="leading" constant="16" id="X2B-1S-WVv"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="checkLabel" destination="pOS-0H-dKv" id="ciX-q4-wOV"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </prototypes>
                             </tableView>
                         </subviews>

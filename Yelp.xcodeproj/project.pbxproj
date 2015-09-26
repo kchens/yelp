@@ -17,6 +17,7 @@
 		22AAAA991AEA0A9700A544AF /* Business.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AAAA981AEA0A9700A544AF /* Business.swift */; };
 		22AAAA9C1AEA1EC300A544AF /* BusinessesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AAAA9B1AEA1EC300A544AF /* BusinessesViewController.swift */; };
 		29541D3C1BB13583007E9031 /* BusinessCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29541D3B1BB13583007E9031 /* BusinessCell.swift */; settings = {ASSET_TAGS = (); }; };
+		29701F2A1BB638FE00672EB2 /* CheckCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29701F291BB638FE00672EB2 /* CheckCell.swift */; settings = {ASSET_TAGS = (); }; };
 		297949BB1BB2857A00E7FB3A /* SwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297949BA1BB2857A00E7FB3A /* SwitchCell.swift */; settings = {ASSET_TAGS = (); }; };
 		297949BD1BB287C700E7FB3A /* FiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297949BC1BB287C700E7FB3A /* FiltersViewController.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
@@ -46,6 +47,7 @@
 		22AAAA981AEA0A9700A544AF /* Business.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Business.swift; sourceTree = "<group>"; };
 		22AAAA9B1AEA1EC300A544AF /* BusinessesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessesViewController.swift; sourceTree = "<group>"; };
 		29541D3B1BB13583007E9031 /* BusinessCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessCell.swift; sourceTree = "<group>"; };
+		29701F291BB638FE00672EB2 /* CheckCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckCell.swift; sourceTree = "<group>"; };
 		297949BA1BB2857A00E7FB3A /* SwitchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchCell.swift; sourceTree = "<group>"; };
 		297949BC1BB287C700E7FB3A /* FiltersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiltersViewController.swift; sourceTree = "<group>"; };
 		97D8B2E3FFD1AF4F4A707E47 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 			children = (
 				29541D3B1BB13583007E9031 /* BusinessCell.swift */,
 				297949BA1BB2857A00E7FB3A /* SwitchCell.swift */,
+				29701F291BB638FE00672EB2 /* CheckCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -322,6 +325,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29701F2A1BB638FE00672EB2 /* CheckCell.swift in Sources */,
 				29541D3C1BB13583007E9031 /* BusinessCell.swift in Sources */,
 				22AAAA9C1AEA1EC300A544AF /* BusinessesViewController.swift in Sources */,
 				297949BD1BB287C700E7FB3A /* FiltersViewController.swift in Sources */,

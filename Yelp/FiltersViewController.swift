@@ -14,20 +14,36 @@ import UIKit
 
 class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SwitchCellDelegate {
 
+    let distances = [0.3,1,5,20]
+
     @IBOutlet weak var tableView: UITableView!
     weak var delegate: FiltersViewControllerDelegate?
     
     var categories: [[String:String]]!
+    var sortingOptions: [[String:String]]!
     var switchStates = [Int:Bool]()
+    var sections = [String: AnyObject]()
+    var deals = false
+//    var selectedFilters = [String: AnyObject]()
+//    var filters = [String: AnyObject]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+//        loadSections()
+        sortingOptions = yelpSortingOptions()
         categories = yelpCategories()
         tableView.delegate = self
         tableView.dataSource = self
     }
 
+//    func loadSections() {
+//        sections["dealList"] = "dealList"
+//        sections["distanceList"] = "distanceList"
+//        sections["sortbyList"] = "sortbyList"
+//        sections["categoryList"] = "categoryList"
+//    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -56,20 +72,68 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
         delegate?.filtersViewController?(self, didUpdateFilters: filters)
     }
     
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 4
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // Implicit Optional
-        return categories.count
+        switch section {
+            case 0:
+                return 1
+            case 1: // For Distance Section
+                return distances.count
+            case 2: // For Sort By Section
+                return sortingOptions.count
+            case 3: // For Categories Section
+                return categories.count
+            default:
+                return 0
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("SwitchCell", forIndexPath: indexPath) as! SwitchCell
-        
-        cell.switchLabel.text = categories[indexPath.row]["name"]
-        cell.delegate = self
-        
-        cell.onSwitch.on = switchStates[indexPath.row] ?? false
-        
-        return cell;
+        let sectionIndex = indexPath.section
+        switch sectionIndex {
+            case 0:
+                let cell = tableView.dequeueReusableCellWithIdentifier("SwitchCell", forIndexPath: indexPath) as! SwitchCell
+                cell.switchLabel.text = "Deals"
+                cell.delegate = self
+                cell.onSwitch.on = deals
+                return cell
+            case 1:
+                let cell = tableView.dequeueReusableCellWithIdentifier("CheckCell", forIndexPath: indexPath) as! CheckCell
+                cell.checkLabel.text = String(distances[indexPath.row]) + " miles"
+                return cell
+            case 2:
+                let cell = tableView.dequeueReusableCellWithIdentifier("CheckCell", forIndexPath: indexPath) as! CheckCell
+                cell.checkLabel.text = sortingOptions[indexPath.row]["name"]
+                return cell
+            case 3:
+                let cell = tableView.dequeueReusableCellWithIdentifier("SwitchCell", forIndexPath: indexPath) as! SwitchCell
+                cell.switchLabel.text = categories[indexPath.row]["name"]
+                cell.delegate = self
+                cell.onSwitch.on = switchStates[indexPath.row] ?? false
+                return cell
+            default:
+                let cell = tableView.dequeueReusableCellWithIdentifier("SwitchCell", forIndexPath:indexPath) as! SwitchCell
+                return cell
+        }
+    }
+    
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+            case 0:
+                return "Deals"
+            case 1:
+                return "Distances"
+            case 2:
+                return "Sort By"
+            case 3:
+                return "Categories"
+            default:
+                return nil
+        }
     }
     
     // We purposely pass back SwitchCell because we don't know which switch gets passed back
@@ -79,6 +143,12 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
         switchStates[indexPath.row] = value
         
         print("filters view controller got the switch event")
+    }
+    
+    func yelpSortingOptions() -> [[String: String]] {
+        return [["name": "Best Match", "code": "0"],
+            ["name": "Distance", "code": "1"],
+            ["name": "Highest Rated", "code": "2"]]
     }
     
     func yelpCategories() -> [[String: String]] {
