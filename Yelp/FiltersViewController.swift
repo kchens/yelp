@@ -21,28 +21,23 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     var categories: [[String:String]]!
     var sortingOptions: [[String:String]]!
+    var checkedDistances: Int!
+    var checkedSortingOptions: Int!
     var switchStates = [Int:Bool]()
     var sections = [String: AnyObject]()
     var deals = false
-//    var selectedFilters = [String: AnyObject]()
-//    var filters = [String: AnyObject]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        loadSections()
+        checkedSortingOptions =  0
+        checkedDistances = 0
+        
         sortingOptions = yelpSortingOptions()
         categories = yelpCategories()
         tableView.delegate = self
         tableView.dataSource = self
     }
-
-//    func loadSections() {
-//        sections["dealList"] = "dealList"
-//        sections["distanceList"] = "distanceList"
-//        sections["sortbyList"] = "sortbyList"
-//        sections["categoryList"] = "categoryList"
-//    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -121,10 +116,32 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let selectedSection = indexPath.section
+//        let selectedRow = indexPath.row
+        let newCell = tableView.cellForRowAtIndexPath(indexPath);
+        if selectedSection == 1 {
+//            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            let oldIndexPath = NSIndexPath(forRow: checkedDistances, inSection: selectedSection)
+            let oldCell = tableView.cellForRowAtIndexPath(oldIndexPath)
+            oldCell?.accessoryType = .None
+
+            newCell?.accessoryType = .Checkmark
+            
+            checkedDistances = indexPath.row
+            tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        }
+        if selectedSection == 2 {
+            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            checkedSortingOptions = indexPath.row
+            tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        }
+    }
+    
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
             case 0:
-                return "Deals"
+                return nil
             case 1:
                 return "Distances"
             case 2:
@@ -139,9 +156,12 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
     // We purposely pass back SwitchCell because we don't know which switch gets passed back
     func switchCell(switchCell: SwitchCell, didChangeValue value: Bool) {
         let indexPath = tableView.indexPathForCell(switchCell)!
-        
-        switchStates[indexPath.row] = value
-        
+        if indexPath.section == 0 {
+            deals = value
+        }
+        if indexPath.section == 3 {
+            switchStates[indexPath.row] = value
+        }
         print("filters view controller got the switch event")
     }
     
