@@ -21,8 +21,8 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     var categories: [[String:String]]!
     var sortingOptions: [[String:String]]!
-    var checkedDistances: Int!
-    var checkedSortingOptions: Int!
+    var checkedDistanceIndex: Int!
+    var checkedSortingOptionIndex: Int!
     var switchStates = [Int:Bool]()
     var sections = [String: AnyObject]()
     var deals = false
@@ -30,8 +30,8 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        checkedSortingOptions =  0
-        checkedDistances = 0
+        checkedSortingOptionIndex =  0
+        checkedDistanceIndex = 3
         
         sortingOptions = yelpSortingOptions()
         categories = yelpCategories()
@@ -122,18 +122,23 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
         let newCell = tableView.cellForRowAtIndexPath(indexPath);
         if selectedSection == 1 {
 //            tableView.deselectRowAtIndexPath(indexPath, animated: true)
-            let oldIndexPath = NSIndexPath(forRow: checkedDistances, inSection: selectedSection)
+            let oldIndexPath = NSIndexPath(forRow: checkedDistanceIndex, inSection: selectedSection)
             let oldCell = tableView.cellForRowAtIndexPath(oldIndexPath)
             oldCell?.accessoryType = .None
 
             newCell?.accessoryType = .Checkmark
             
-            checkedDistances = indexPath.row
+            checkedDistanceIndex = indexPath.row
             tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
         }
         if selectedSection == 2 {
-            tableView.deselectRowAtIndexPath(indexPath, animated: true)
-            checkedSortingOptions = indexPath.row
+            let oldIndexPath = NSIndexPath(forRow: checkedSortingOptionIndex, inSection: selectedSection)
+            let oldCell = tableView.cellForRowAtIndexPath(oldIndexPath)
+            oldCell?.accessoryType = .None
+            
+            newCell?.accessoryType = .Checkmark
+            
+            checkedSortingOptionIndex = indexPath.row
             tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
         }
     }
