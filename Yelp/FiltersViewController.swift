@@ -59,7 +59,8 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
                 selectedCategories.append(categories[row]["code"]!)
             }
         }
-        
+
+        // Passing in checked sorting option index
         if checkedSortingOptionIndex != -1 {
             filters["sortingOption"] = sortingOptions[checkedSortingOptionIndex]["code"]
         }
@@ -73,11 +74,8 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         // Passing in checked distance index
         if checkedDistanceIndex != -1 {
-            filters["distance"] = checkedDistanceIndex
+            filters["radiusDistance"] = distances[checkedDistanceIndex] * 1609.34
         }
-        
-        // Passing in checked sorting option index
-        print(checkedSortingOptionIndex)
         
         // If delegate exists, run this filtersViewController
         delegate?.filtersViewController?(self, didUpdateFilters: filters)
@@ -135,6 +133,9 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let selectedSection = indexPath.section
         let newCell = tableView.cellForRowAtIndexPath(indexPath);
+        
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
         if selectedSection == 1 {
             let oldIndexPath = NSIndexPath(forRow: checkedDistanceIndex, inSection: selectedSection)
             let oldCell = tableView.cellForRowAtIndexPath(oldIndexPath)
@@ -143,7 +144,7 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
             newCell?.accessoryType = .Checkmark
             
             checkedDistanceIndex = indexPath.row
-            tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+//            tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
         }
         if selectedSection == 2 {
             let oldIndexPath = NSIndexPath(forRow: checkedSortingOptionIndex, inSection: selectedSection)
@@ -153,7 +154,7 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
             newCell?.accessoryType = .Checkmark
             
             checkedSortingOptionIndex = indexPath.row
-            tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+//            tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
         }
     }
     

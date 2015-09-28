@@ -49,15 +49,17 @@ class YelpClient: BDBOAuth1RequestOperationManager {
     }
     
     func searchWithTerm(term: String, completion: ([Business]!, NSError!) -> Void) -> AFHTTPRequestOperation {
-        return searchWithTerm(term, sort: nil, categories: nil, deals: nil, completion: completion)
+        return searchWithTerm(term, sort: nil, categories: nil, deals: nil, radius: nil, completion: completion)
     }
     
-    func searchWithTerm(term: String, sort: Int?, categories: [String]?, deals: Bool?, completion: ([Business]!, NSError!) -> Void) -> AFHTTPRequestOperation {
+    func searchWithTerm(term: String, sort: Int?, categories: [String]?, deals: Bool?, radius: Double?, completion: ([Business]!, NSError!) -> Void) -> AFHTTPRequestOperation {
         // For additional parameters, see http://www.yelp.com/developers/documentation/v2/search_api
-
+        
         // Default the location to San Francisco
         var parameters: [String : AnyObject] = ["term": term, "ll": "37.785771,-122.406165"]
-
+        
+//        var parameters: [String : AnyObject] = ["term": term]
+        
         if sort != nil {
             parameters["sort"] = sort
         }
@@ -68,6 +70,10 @@ class YelpClient: BDBOAuth1RequestOperationManager {
         
         if deals != nil {
             parameters["deals_filter"] = deals!
+        }
+        
+        if radius != nil {
+            parameters["radius_filter"] = radius
         }
         
         print(parameters)

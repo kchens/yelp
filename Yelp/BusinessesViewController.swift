@@ -43,7 +43,7 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
 //            }
 //        })
         
-        Business.searchWithTerm("Restaurants", sort: nil, categories: ["asianfusion", "burgers"], deals: true) { (businesses: [Business]!, error: NSError!) -> Void in
+        Business.searchWithTerm("Restaurants", sort: nil, categories: ["asianfusion", "burgers"], deals: true, radius: nil) { (businesses: [Business]!, error: NSError!) -> Void in
 
             self.businesses = businesses
             self.setUpFilteredBusinesses()
@@ -117,7 +117,7 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
 
     // Navigation-related function
     func filtersViewController(filtersViewController: FiltersViewController, didUpdateFilters filters: [String : AnyObject]) {
-        var sort = filters["sortingOption"]?.integerValue
+        let sort = filters["sortingOption"]?.integerValue
         var selectedSort = sort
         
         if sort == nil {
@@ -126,20 +126,26 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
             selectedSort = sort!
         }
         
-        print("sort")
-        print (selectedSort)
-        
         let selectedCategories = filters["categories"] as? [String]
         let selectedDeals = filters["deals"] as? Bool
-//        let selectedDistance = filters["distance"] as! Int
+        
+        let selectedRadiusDistance = filters["radiusDistance"] as? Double
+        print("distance")
+        print(selectedRadiusDistance)
+        
+        print("location")
+        print(filters["location"]?.stringValue)
+        
         Business.searchWithTerm("Restaurants",
             sort: selectedSort,
             categories: selectedCategories,
-            deals: selectedDeals
-//            distance: selectedDistance
+            deals: selectedDeals,
+            radius: selectedRadiusDistance
             ) { (businesses: [Business]!,
             error: NSError!) -> Void in
+                
             self.filteredBusinesses = businesses
+        
             self.tableView.reloadData()
         }
     }
