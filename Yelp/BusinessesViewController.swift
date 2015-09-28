@@ -117,10 +117,12 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
 
     // Navigation-related function
     func filtersViewController(filtersViewController: FiltersViewController, didUpdateFilters filters: [String : AnyObject]) {
-        let categories = filters["categories"] as? [String]
-        Business.searchWithTerm("Restaurants", sort: nil, categories: categories, deals: nil) { (businesses: [Business]!,
+        let selectedCategories = filters["categories"] as? [String]
+        let selectedDeals = filters["deals"] as? Bool
+        print(selectedDeals)
+        Business.searchWithTerm("Restaurants", sort: nil, categories: selectedCategories, deals: selectedDeals) { (businesses: [Business]!,
             error: NSError!) -> Void in
-            self.businesses = businesses
+            self.filteredBusinesses = businesses
             self.tableView.reloadData()
         }
     }

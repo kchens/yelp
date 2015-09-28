@@ -25,7 +25,7 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
     var checkedSortingOptionIndex: Int!
     var switchStates = [Int:Bool]()
     var sections = [String: AnyObject]()
-    var deals = false
+    var dealSwitch = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,6 +62,9 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
         if selectedCategories.count > 0 {
             filters["categories"] = selectedCategories
         }
+    
+        // Passing deals value to the switch
+        filters["deals"] = dealSwitch
         
         // If delegate exists, run this filtersViewController
         delegate?.filtersViewController?(self, didUpdateFilters: filters)
@@ -94,7 +97,7 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
                 let cell = tableView.dequeueReusableCellWithIdentifier("SwitchCell", forIndexPath: indexPath) as! SwitchCell
                 cell.switchLabel.text = "Deals"
                 cell.delegate = self
-                cell.onSwitch.on = deals
+                cell.onSwitch.on = dealSwitch
                 return cell
             case 1:
                 let cell = tableView.dequeueReusableCellWithIdentifier("CheckCell", forIndexPath: indexPath) as! CheckCell
@@ -162,7 +165,7 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
     func switchCell(switchCell: SwitchCell, didChangeValue value: Bool) {
         let indexPath = tableView.indexPathForCell(switchCell)!
         if indexPath.section == 0 {
-            deals = value
+            dealSwitch = value
         }
         if indexPath.section == 3 {
             switchStates[indexPath.row] = value
