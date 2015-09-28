@@ -43,6 +43,8 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
 //            }
 //        })
         
+        
+        // Change the parameters to change the intial businesses load.
         Business.searchWithTerm("Restaurants", sort: nil, categories: ["asianfusion", "burgers"], deals: true, radius: nil) { (businesses: [Business]!, error: NSError!) -> Void in
 
             self.businesses = businesses
