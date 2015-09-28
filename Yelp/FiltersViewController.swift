@@ -30,8 +30,9 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        checkedSortingOptionIndex =  0
-        checkedDistanceIndex = 3
+        // Set variables to a fake default of -1. Only filter if not -1.
+        checkedSortingOptionIndex =  -1
+        checkedDistanceIndex = -1
         
         sortingOptions = yelpSortingOptions()
         categories = yelpCategories()
@@ -59,12 +60,24 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
             }
         }
         
+        if checkedSortingOptionIndex != -1 {
+            filters["sortingOption"] = sortingOptions[checkedSortingOptionIndex]["code"]
+        }
+        
         if selectedCategories.count > 0 {
             filters["categories"] = selectedCategories
         }
     
         // Passing deals value to the switch
         filters["deals"] = dealSwitch
+        
+        // Passing in checked distance index
+        if checkedDistanceIndex != -1 {
+            filters["distance"] = checkedDistanceIndex
+        }
+        
+        // Passing in checked sorting option index
+        print(checkedSortingOptionIndex)
         
         // If delegate exists, run this filtersViewController
         delegate?.filtersViewController?(self, didUpdateFilters: filters)
@@ -121,10 +134,8 @@ class FiltersViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let selectedSection = indexPath.section
-//        let selectedRow = indexPath.row
         let newCell = tableView.cellForRowAtIndexPath(indexPath);
         if selectedSection == 1 {
-//            tableView.deselectRowAtIndexPath(indexPath, animated: true)
             let oldIndexPath = NSIndexPath(forRow: checkedDistanceIndex, inSection: selectedSection)
             let oldCell = tableView.cellForRowAtIndexPath(oldIndexPath)
             oldCell?.accessoryType = .None

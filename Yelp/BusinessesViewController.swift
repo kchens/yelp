@@ -43,7 +43,7 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
 //            }
 //        })
         
-        Business.searchWithTerm("Restaurants", sort: .Distance, categories: ["asianfusion", "burgers"], deals: true) { (businesses: [Business]!, error: NSError!) -> Void in
+        Business.searchWithTerm("Restaurants", sort: nil, categories: ["asianfusion", "burgers"], deals: true) { (businesses: [Business]!, error: NSError!) -> Void in
 
             self.businesses = businesses
             self.setUpFilteredBusinesses()
@@ -117,10 +117,27 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
 
     // Navigation-related function
     func filtersViewController(filtersViewController: FiltersViewController, didUpdateFilters filters: [String : AnyObject]) {
+        var sort = filters["sortingOption"]?.integerValue
+        var selectedSort = sort
+        
+        if sort == nil {
+            selectedSort = nil
+        } else {
+            selectedSort = sort!
+        }
+        
+        print("sort")
+        print (selectedSort)
+        
         let selectedCategories = filters["categories"] as? [String]
         let selectedDeals = filters["deals"] as? Bool
-        print(selectedDeals)
-        Business.searchWithTerm("Restaurants", sort: nil, categories: selectedCategories, deals: selectedDeals) { (businesses: [Business]!,
+//        let selectedDistance = filters["distance"] as! Int
+        Business.searchWithTerm("Restaurants",
+            sort: selectedSort,
+            categories: selectedCategories,
+            deals: selectedDeals
+//            distance: selectedDistance
+            ) { (businesses: [Business]!,
             error: NSError!) -> Void in
             self.filteredBusinesses = businesses
             self.tableView.reloadData()
