@@ -35,6 +35,7 @@ Time spent: `<Number of hours spent>`
 
 ### Walkthrough
 
-![Video Walkthrough](...)
+![Portrait Walkthrough](https://raw.githubusercontent.com/kchens/yelp/master/yelp.gif)
+![Landscape Walkthrough](https://raw.githubusercontent.com/kchens/yelp/master/yelp-landscape.gif)
 
 
